@@ -1,4 +1,4 @@
-package com.noralsy.connectedmailbox;
+package com.noralsy.connected_mailbox;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
