@@ -1,4 +1,4 @@
-package com.noralsy.connected_mailbox.Entity;
+package com.noralsy.connected_mailbox.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
@@ -12,10 +12,10 @@ import lombok.ToString;
 @ToString
 public class Mailbox {
     @TableId
-    private String mailboxID;
-    private String interphoneID;
+    private String mailboxId;
+    private String interphoneId;
     private String nickname;
-    private String userID;
+    private String userId;
     private Boolean gotNew;
     private String screenInfo;
 }

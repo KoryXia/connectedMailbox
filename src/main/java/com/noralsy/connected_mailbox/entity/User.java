@@ -1,4 +1,4 @@
-package com.noralsy.connected_mailbox.Entity;
+package com.noralsy.connected_mailbox.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;

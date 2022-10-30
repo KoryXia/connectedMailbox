@@ -1,4 +1,4 @@
-package com.noralsy.connected_mailbox.Entity;
+package com.noralsy.connected_mailbox.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @Data
 @ToString
-public class Interphone {
+public class UserInfo {
     @TableId
-    private String interphoneID;
-    private String city;
+    private String userId;
+    private String name;
     private String address;
-    private String postalCode;
+    private String room;
+    private String phone;
+    private String city;
     private String country;
+    private String postalCode;
 }
