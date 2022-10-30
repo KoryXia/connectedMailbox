@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.noralsy.connected_mailbox.Mapper")
+@MapperScan("com.noralsy.connected_mailbox.mapper")
 public class ConnectedMailboxApplication {
 
     public static void main(String[] args) {
