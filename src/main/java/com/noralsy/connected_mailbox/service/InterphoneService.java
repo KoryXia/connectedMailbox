@@ -19,7 +19,7 @@ public class InterphoneService {
             Page<Interphone> page = new Page<>(0,10);
             return new Result("success", interphoneMapper.selectPage(page,null));
         }catch (Exception e){
-            return new Result("failed", null);
+            return new Result("failed", e.getClass());
         }
     }
 
@@ -27,9 +27,14 @@ public class InterphoneService {
         try{
             QueryWrapper<Interphone> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("interphone_id",id);
-            return new Result("success", interphoneMapper.selectOne(queryWrapper));
+            Interphone interphone = interphoneMapper.selectOne(queryWrapper);
+            if (interphone == null) {
+                return new Result("Interphone does not exist", null);
+            } else {
+                return new Result("success", interphoneMapper.selectOne(queryWrapper));
+            }
         }catch (Exception e){
-            return new Result("Interphone does not exist", null);
+            return new Result("failed", e.getClass());
         }
     }
 }

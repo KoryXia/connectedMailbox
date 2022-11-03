@@ -25,9 +25,14 @@ public class UserService {
         try{
             QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", id);
-            return new Result("success", userInfoMapper.selectOne(queryWrapper));
+            UserInfo userInfo = userInfoMapper.selectOne(queryWrapper);
+            if (userInfo == null) {
+                return new Result("User does not exist", null);
+            } else {
+                return new Result("success", userInfo);
+            }
         }catch (Exception e){
-            return new Result("User does not exist", null);
+            return new Result("failed", e.getClass());
         }
     }
 
@@ -42,7 +47,7 @@ public class UserService {
                 return new Result("failed", null);
             }
         }catch (Exception e){
-            return new Result("failed", null);
+            return new Result("failed", e.getClass());
         }
 
     }
@@ -54,7 +59,7 @@ public class UserService {
             userTokenMapper.update(userToken,updateWrapper);
             return new Result("success", null);
         }catch (Exception e){
-            return new Result("failed",null);
+            return new Result("failed",e.getClass());
         }
     }
 
@@ -64,7 +69,7 @@ public class UserService {
             queryWrapper.eq("user_id", id);
             return new Result("success", userTokenMapper.selectOne(queryWrapper));
         }catch (Exception e){
-            return new Result("User does not exist", null);
+            return new Result("User does not exist", e.getClass());
         }
     }
 }

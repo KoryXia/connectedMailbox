@@ -7,6 +7,8 @@ import com.noralsy.connected_mailbox.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MailboxService {
     @Autowired
@@ -16,9 +18,14 @@ public class MailboxService {
         try {
             QueryWrapper<Mailbox> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", id);
-            return new Result("success", mailboxMapper.selectList(queryWrapper));
-        }catch (Exception e){
-            return new Result("failed", null);
+            List<Mailbox> mailboxes = mailboxMapper.selectList(queryWrapper);
+            if (mailboxes.size() == 0) {
+                return new Result("No mailbox", null);
+            } else {
+                return new Result("success", mailboxMapper.selectList(queryWrapper));
+            }
+        } catch (Exception e) {
+            return new Result("failed", e.getClass());
         }
     }
 
@@ -27,7 +34,8 @@ public class MailboxService {
             mailboxMapper.insert(mailbox);
             return new Result("success", mailbox);
         } catch (Exception e) {
-            return new Result("failed", null);
+            System.out.println(e.getMessage());
+            return new Result("failed", e.getClass());
         }
     }
 }
