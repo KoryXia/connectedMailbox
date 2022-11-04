@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @ToString
 @AllArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Result {
+public class BaseResult<T> implements Serializable{
     private String msg;
-    private Object res;
+    private T data;
 }

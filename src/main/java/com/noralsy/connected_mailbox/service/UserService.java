@@ -8,7 +8,8 @@ import com.noralsy.connected_mailbox.entity.UserToken;
 import com.noralsy.connected_mailbox.mapper.UserInfoMapper;
 import com.noralsy.connected_mailbox.mapper.UserMapper;
 import com.noralsy.connected_mailbox.mapper.UserTokenMapper;
-import com.noralsy.connected_mailbox.utils.Result;
+import com.noralsy.connected_mailbox.utils.BaseResult;
+import com.noralsy.connected_mailbox.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,55 +22,60 @@ public class UserService {
     @Autowired
     private UserTokenMapper userTokenMapper;
 
-    public Result getUserInfo(String id){
+    public BaseResult<UserInfo> getUserInfo(String id){
         try{
             QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", id);
             UserInfo userInfo = userInfoMapper.selectOne(queryWrapper);
             if (userInfo == null) {
-                return new Result("User does not exist", null);
+                return ResultUtil.error("User does not exist");
             } else {
-                return new Result("success", userInfo);
+                return ResultUtil.success(userInfo);
             }
         }catch (Exception e){
-            return new Result("failed", e.getClass());
+            return ResultUtil.error("failed");
         }
     }
 
-    public Result userLoginIn(User user){
+    public BaseResult<UserInfo> userLoginIn(User user){
         try{
             //Maybe encrypt and decrypt password here
             if(userMapper.getPassword(user.getPhone()).equals(user.getPassword())){
                 QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("phone", user.getPhone());
-                return new Result("success", userInfoMapper.selectOne(queryWrapper));
+                return ResultUtil.success(userInfoMapper.selectOne(queryWrapper));
             }else {
-                return new Result("failed", null);
+                return ResultUtil.error("Incorrect phone number or password");
             }
         }catch (Exception e){
-            return new Result("failed", e.getClass());
+            return ResultUtil.error();
         }
 
     }
 
-    public Result updateToken(UserToken userToken){
+    public BaseResult<Object> updateToken(UserToken userToken){
         try {
             UpdateWrapper<UserToken> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userToken.getUserId());
             userTokenMapper.update(userToken,updateWrapper);
-            return new Result("success", null);
+            return ResultUtil.success(null);
         }catch (Exception e){
-            return new Result("failed",e.getClass());
+            return ResultUtil.error();
         }
     }
 
-    public Result getToken(String id){
+    public BaseResult<UserToken> getToken(String id){
         try{
             QueryWrapper<UserToken> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", id);
-            return new Result("success", userTokenMapper.selectOne(queryWrapper));
+            UserToken userToken = userTokenMapper.selectOne(queryWrapper);
+            if (userToken == null) {
+                return ResultUtil.error("User does not exist");
+            } else {
+                return ResultUtil.success(userToken);
+            }
         }catch (Exception e){
-            return new Result("User does not exist", e.getClass());
+            return ResultUtil.error();
         }
     }
 }

@@ -1,12 +1,15 @@
 package com.noralsy.connected_mailbox.controller;
 
+import com.noralsy.connected_mailbox.entity.Letter;
 import com.noralsy.connected_mailbox.service.LetterService;
-import com.noralsy.connected_mailbox.utils.Result;
+import com.noralsy.connected_mailbox.utils.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @RestController
@@ -16,7 +19,7 @@ public class LetterController {
     private LetterService letterService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Result getAllLettersByMailboxId(@PathVariable String id){
+    public BaseResult<List<Letter>> getAllLettersByMailboxId(@PathVariable String id){
         return letterService.getAllLettersByMailboxId(id);
     }
 }
