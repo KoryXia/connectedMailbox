@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class Mailbox {
-    @TableId
+    @TableId()
     private String mailboxId;
     private String interphoneId;
     private String nickname;

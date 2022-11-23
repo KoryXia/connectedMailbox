@@ -26,7 +26,7 @@ public class LetterService {
                 return ResultUtil.success(letterList);
             }
         } catch (Exception e) {
-            return ResultUtil.error();
+            return ResultUtil.error(e.toString());
         }
     }
 }

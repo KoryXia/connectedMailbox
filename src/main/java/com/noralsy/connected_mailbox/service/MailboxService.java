@@ -26,7 +26,7 @@ public class MailboxService {
                 return ResultUtil.success(mailboxes);
             }
         } catch (Exception e) {
-            return ResultUtil.error();
+            return ResultUtil.error(e.toString());
         }
     }
 

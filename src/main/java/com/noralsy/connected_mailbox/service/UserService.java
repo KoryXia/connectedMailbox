@@ -22,8 +22,8 @@ public class UserService {
     @Autowired
     private UserTokenMapper userTokenMapper;
 
-    public BaseResult<UserInfo> getUserInfo(String id){
-        try{
+    public BaseResult<UserInfo> getUserInfo(String id) {
+        try {
             QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", id);
             UserInfo userInfo = userInfoMapper.selectOne(queryWrapper);
@@ -32,50 +32,65 @@ public class UserService {
             } else {
                 return ResultUtil.success(userInfo);
             }
-        }catch (Exception e){
-            return ResultUtil.error("failed");
+        } catch (Exception e) {
+            return ResultUtil.error(e.toString());
         }
     }
 
-    public BaseResult<UserInfo> userLoginIn(User user){
-        try{
+    public BaseResult<UserInfo> userLogin(User user) {
+        try {
             //Maybe encrypt and decrypt password here
-            if(userMapper.getPassword(user.getPhone()).equals(user.getPassword())){
+            if (userMapper.getPassword(user.getPhone()).equals(user.getPassword())) {
                 QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("phone", user.getPhone());
                 return ResultUtil.success(userInfoMapper.selectOne(queryWrapper));
-            }else {
-                return ResultUtil.error("Incorrect phone number or password");
+            } else {
+                return ResultUtil.error("incorrect_info");
             }
-        }catch (Exception e){
-            return ResultUtil.error();
+        } catch (Exception e) {
+            return ResultUtil.error("null_user");
         }
 
     }
 
-    public BaseResult<Object> updateToken(UserToken userToken){
+    public BaseResult<Object> updateToken(UserToken userToken) {
         try {
             UpdateWrapper<UserToken> updateWrapper = new UpdateWrapper<>();
             updateWrapper.eq("user_id", userToken.getUserId());
-            userTokenMapper.update(userToken,updateWrapper);
+            userTokenMapper.update(userToken, updateWrapper);
             return ResultUtil.success(null);
-        }catch (Exception e){
-            return ResultUtil.error();
+        } catch (Exception e) {
+            return ResultUtil.error(e.toString());
         }
     }
 
-    public BaseResult<UserToken> getToken(String id){
-        try{
+    public BaseResult<String> checkToken(String id, String token) {
+        try {
             QueryWrapper<UserToken> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", id);
             UserToken userToken = userTokenMapper.selectOne(queryWrapper);
             if (userToken == null) {
                 return ResultUtil.error("User does not exist");
             } else {
-                return ResultUtil.success(userToken);
+                if(userToken.getToken().equals(token)){
+                    return ResultUtil.success("same");
+                }
+                return ResultUtil.success("diff");
             }
-        }catch (Exception e){
-            return ResultUtil.error();
+        } catch (Exception e) {
+            return ResultUtil.error(e.toString());
         }
     }
+
+    public BaseResult<String> changePassword(String phone, String password) {
+        try {
+            UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("phone", phone);
+            userMapper.update(new User(phone, password), updateWrapper);
+            return ResultUtil.success("success");
+        } catch (Exception e) {
+            return ResultUtil.error(e.toString());
+        }
+    }
+
 }

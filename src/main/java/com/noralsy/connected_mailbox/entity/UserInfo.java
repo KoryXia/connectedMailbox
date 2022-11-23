@@ -20,4 +20,5 @@ public class UserInfo {
     private String city;
     private String country;
     private String postalCode;
+    private String email;
 }

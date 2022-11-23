@@ -20,7 +20,7 @@ public class InterphoneService {
             Page<Interphone> page = new Page<>(0,10);
             return ResultUtil.success(interphoneMapper.selectPage(page,null));
         }catch (Exception e){
-            return ResultUtil.error();
+            return ResultUtil.error(e.toString());
         }
     }
 
@@ -35,7 +35,7 @@ public class InterphoneService {
                 return ResultUtil.success(interphone);
             }
         }catch (Exception e){
-            return ResultUtil.error();
+            return ResultUtil.error(e.toString());
         }
     }
 }

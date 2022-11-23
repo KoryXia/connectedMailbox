@@ -20,9 +20,9 @@ public class UserController {
         return userService.getUserInfo(id);
     }
 
-    @RequestMapping(value = "/loginIn", method = RequestMethod.POST)
-    public BaseResult<UserInfo> userLoginIn(User user) {
-        return userService.userLoginIn(user);
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public BaseResult<UserInfo> userLogin(User user) {
+        return userService.userLogin(user);
     }
 
     @RequestMapping(value = "/updateToken", method = RequestMethod.POST)
@@ -30,8 +30,8 @@ public class UserController {
         return userService.updateToken(userToken);
     }
 
-    @RequestMapping(value = "/getUserToken", method = RequestMethod.GET)
-    public BaseResult<UserToken> getUserToken(@RequestParam String id) {
-        return userService.getToken(id);
+    @RequestMapping(value = "/checkToken", method = RequestMethod.POST)
+    public BaseResult<String> checkToken(UserToken userToken) {
+        return userService.checkToken(userToken.getUserId(), userToken.getToken());
     }
 }
