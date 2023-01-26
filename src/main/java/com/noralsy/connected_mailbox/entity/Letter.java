@@ -1,5 +1,6 @@
 package com.noralsy.connected_mailbox.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -14,10 +15,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Letter {
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer letterId;
     private String mailboxId;
-    private Boolean gotNew;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+2")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+1")
     private Timestamp dateTime;
 }

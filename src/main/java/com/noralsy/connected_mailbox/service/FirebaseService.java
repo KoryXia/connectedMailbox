@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FirebaseService {
-    public BaseResult<String> creatNotification(String title, String body, String token) throws FirebaseMessagingException {
+    public BaseResult<String> creatNotification(String token) throws FirebaseMessagingException {
         Notification notification = Notification
                 .builder()
-                .setTitle(title)
-                .setBody(body)
+                .setTitle("New Letter")
+                .setBody("Click to check!")
                 .build();
         Message message = Message.builder()
                 .setNotification(notification)

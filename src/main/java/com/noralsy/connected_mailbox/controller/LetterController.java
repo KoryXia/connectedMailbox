@@ -4,10 +4,7 @@ import com.noralsy.connected_mailbox.entity.Letter;
 import com.noralsy.connected_mailbox.service.LetterService;
 import com.noralsy.connected_mailbox.utils.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +18,10 @@ public class LetterController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public BaseResult<List<Letter>> getAllLettersByMailboxId(@PathVariable String id){
         return letterService.getAllLettersByMailboxId(id);
+    }
+
+    @RequestMapping(value = "/insert_new_letter/{id}", method = RequestMethod.GET)
+    public BaseResult<Letter> insertLetter(@PathVariable String id) {
+        return this.letterService.insertLetter(id);
     }
 }

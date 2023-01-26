@@ -24,4 +24,9 @@ public class MailboxController {
     public BaseResult<Mailbox> bindMailbox(Mailbox mailbox){
         return mailboxService.bindMailbox(mailbox);
     }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public BaseResult<String> updateState(@PathVariable String id){
+        return mailboxService.updateState(id);
+    }
 }

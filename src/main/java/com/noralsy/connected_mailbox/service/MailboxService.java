@@ -1,6 +1,7 @@
 package com.noralsy.connected_mailbox.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.noralsy.connected_mailbox.entity.Mailbox;
 import com.noralsy.connected_mailbox.mapper.MailboxMapper;
 import com.noralsy.connected_mailbox.utils.BaseResult;
@@ -36,6 +37,22 @@ public class MailboxService {
             return ResultUtil.success(mailbox);
         } catch (Exception e) {
             return ResultUtil.error("This mailbox has been bound");
+        }
+    }
+
+    public BaseResult<String> updateState(String id) {
+        try {
+            QueryWrapper<Mailbox> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("mailbox_id", id);
+            Mailbox mailbox = mailboxMapper.selectOne(queryWrapper);
+            UpdateWrapper<Mailbox> updateWrapper = new UpdateWrapper<>();
+            if (!mailbox.getGotNew()) {
+                updateWrapper.eq("mailbox_id", id).set("got_new", !mailbox.getGotNew());
+                mailboxMapper.update(null, updateWrapper);
+            }
+            return ResultUtil.success(id);
+        } catch (Exception e) {
+            return ResultUtil.error(e.toString());
         }
     }
 }

@@ -16,7 +16,7 @@ public class FirebaseController {
     private FirebaseService firebaseService;
 
     @RequestMapping(value = "/creatNotification", method = RequestMethod.GET)
-    public BaseResult<String> creatNotification(@RequestParam String title, @RequestParam String body, @RequestParam String token) throws FirebaseMessagingException {
-        return this.firebaseService.creatNotification(title, body, token);
+    public BaseResult<String> creatNotification(@RequestParam String token) throws FirebaseMessagingException {
+        return this.firebaseService.creatNotification(token);
     }
 }
